@@ -211,7 +211,7 @@ func (c *giftController) SendGift(ctx *gin.Context) (interface{}, error) {
 	rService.UpdateSingleLive(ctx, statsSingleLiveEntity)
 	// 记录送礼的积分
 	sid, cacheErr := cache.Client.Get(fmt.Sprintf(model.PkIntegral, sendGift.AnchorId))
-	if cacheErr != nil && sid != "" {
+	if cacheErr == nil && sid != "" {
 		// pk记录
 		KEY := fmt.Sprintf(model.PkIntegral, sid)
 		cache.Client.HIncrBy(KEY, sendGift.AnchorId, int64(sendGift.Amount))
